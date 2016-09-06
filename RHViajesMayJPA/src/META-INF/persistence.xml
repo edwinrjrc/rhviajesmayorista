@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="RHViajesMayJPA">
+		<class>pe.rhviajes.mayorista.negocio.ejb.entity.Usuario</class>
+		<class>pe.rhviajes.mayorista.negocio.ejb.entity.Usuariorol</class>
+		<class>pe.rhviajes.mayorista.negocio.ejb.entity.Rol</class>
+		<class>pe.rhviajes.mayorista.negocio.ejb.entity.UsuariorolPK</class>
+		<properties>
+			<property name="hibernate.connection.datasource" value="java:/jboss/jdbc/rhviajesmay2DS" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+			<property name="hibernate.ejb.entitymanager_factory_name" value="RHViajesMayJPA"/>
+		</properties>
+	</persistence-unit>
+</persistence>
