@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>RHViajesMayWeb</project>
-		<project>RHViajesMayJPA</project>
 		<project>RHViajesMayNegocioClient</project>
 	</projects>
 	<buildSpec>

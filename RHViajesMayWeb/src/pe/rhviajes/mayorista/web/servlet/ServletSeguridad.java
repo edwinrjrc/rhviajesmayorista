@@ -2,6 +2,7 @@ package pe.rhviajes.mayorista.web.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import pe.rhviajes.mayorista.bean.Rol;
 import pe.rhviajes.mayorista.bean.Usuario;
 import pe.rhviajes.mayorista.negocio.ejb.session.SeguridadRemote;
 import pe.rhviajes.mayorista.negocio.excepcion.RHViajesException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 /**
@@ -56,9 +59,23 @@ public class ServletSeguridad extends HttpServlet {
 			
 			if (StringUtils.equals("listarCatalogos", request.getParameter("accion"))){
 				List<Usuario> lista = this.seguridadRemote.listarUsuarios();
+				List<Rol> listaRoles = this.seguridadRemote.listarRoles();
 				Map<String, Object> objetos= new HashMap<String, Object>();
 				objetos.put("usuarios", lista);
+				objetos.put("roles", listaRoles);
 				respuesta.println(gson.toJson(objetos));
+			}
+			else if (StringUtils.equals("ingresarUsuario", request.getParameter("accion"))){
+				String formulario = request.getParameter("formulario");
+				System.out.println("formulario ::"+formulario);
+				Type type = new TypeToken<Map<String, Object>>(){}.getType();
+				Map<String, Object> mapeo = gson.fromJson(formulario, type);
+				
+				System.out.println("login ::"+mapeo.get("login"));
+				System.out.println("password ::"+mapeo.get("password"));
+				System.out.println("repassword ::"+mapeo.get("repassword"));
+				System.out.println("nombres ::"+mapeo.get("nombres"));
+				System.out.println("apellidos ::"+mapeo.get("apellidos"));
 			}
 			
 		} catch (RHViajesException e) {

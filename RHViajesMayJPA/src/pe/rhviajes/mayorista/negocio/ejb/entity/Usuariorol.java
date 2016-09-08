@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="seguridad.usuariorol")
+@Table(name="usuariorol", schema="seguridad")
 @NamedQuery(name="Usuariorol.findAll", query="SELECT u FROM Usuariorol u")
 public class Usuariorol implements Serializable {
 	private static final long serialVersionUID = 1L;

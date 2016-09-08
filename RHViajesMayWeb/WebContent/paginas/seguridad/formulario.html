@@ -19,6 +19,7 @@
 						<div class="col-lg-4">Rol</div>
 						<div class="col-lg-8">
 							<select class="form-control">
+								<option>-Seleccione-</option>
 								<option ng-repeat="rol in listaRoles" ng-value="rol.id">{{rol.nombre}}</option>
 							</select>
 						</div>
@@ -49,8 +50,8 @@
 										<td>{{usuario.id}}</td>
 										<td>{{usuario.login}}</td>
 										<td>{{usuario.nombres}}</td>
-										<td class="center">{{usuario.apepaterno}}</td>
-										<td class="center">{{usuario.apematerno}}</td>
+										<td class="center">{{usuario.apellidoPaterno}}</td>
+										<td class="center">{{usuario.apellidoMaterno}}</td>
 										<td class="center">X</td>
 									</tr>
 								</tbody>

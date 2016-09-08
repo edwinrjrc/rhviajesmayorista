@@ -6,10 +6,12 @@ public class Usuario extends Base{
 	
 	private static final long serialVersionUID = 4059264201314046881L;
 	private String login;
+	private String password;
 	private String nombres;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	private List<Rol> roles;
+	private int idEmpresa;
 	
 	/**
 	 * @return the login
@@ -70,5 +72,29 @@ public class Usuario extends Base{
 	 */
 	public void setRoles(List<Rol> roles) {
 		this.roles = roles;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	/**
+	 * @return the idEmpresa
+	 */
+	public int getIdEmpresa() {
+		return idEmpresa;
+	}
+	/**
+	 * @param idEmpresa the idEmpresa to set
+	 */
+	public void setIdEmpresa(int idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 }

@@ -25,25 +25,37 @@ appinicio.controller('SeguridadCtrl', ['$scope','$http', function($scope, $http)
 	$scope.listaRoles = {};
 	$scope.beanUsuario = {};
 	
-	$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
-		params: {accion:'listarCatalogos'}}).then(
-			function successCallback(response){
-				console.log('Response success');
-				$scope.listaUsuarios = response.data.usuarios;
-				$scope.listaRoles = response.data.roles;
-			},
-			function errorCallback(response){
-				console.log('Response error');
-			});
+	$scope.listarUsuario = function(){
+		$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
+			params: {accion:'listarCatalogos'}}).then(
+				function successCallback(response){
+					$scope.listaUsuarios = response.data.usuarios;
+					$scope.listaRoles = response.data.roles;
+				},
+				function errorCallback(response){
+					console.log('Response error');
+				});
+	};
 	
 	$scope.enviaForm = function(isValid){
 		console.log("Hola");
+		$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
+			params: {accion:'ingresarUsuario', formulario: $scope.beanUsuario}}).then(
+				function successCallback(response){
+					console.log('Response success ingresarUsuario');
+					
+				},
+				function errorCallback(response){
+					console.log('Response error');
+				});
 	};
 
 	$scope.nuevoUsuario = function(){
 		console.log('llamando a usuario');
 		location.href="#/nuevoUsuario";
 	};
+	
+	$scope.listarUsuario();
 	
 }]);
 

@@ -27,6 +27,7 @@
 						<div class="col-lg-4">Rol</div>
 						<div class="col-lg-8">
 							<select class="form-control" ng-model="beanUsuario.rol.id" required>
+								<option>-Seleccione-</option>
 								<option ng-repeat="rol in listaRoles" ng-value="rol.id">{{rol.nombre}}</option>
 							</select>
 						</div>

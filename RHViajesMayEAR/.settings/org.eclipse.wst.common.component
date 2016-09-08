@@ -5,9 +5,6 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="RHViajesMayJPA.jar" deploy-path="/lib" handle="module:/resource/RHViajesMayJPA/RHViajesMayJPA">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="RHViajesMayNegocioClient.jar" deploy-path="/lib" handle="module:/resource/RHViajesMayNegocioClient/RHViajesMayNegocioClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>

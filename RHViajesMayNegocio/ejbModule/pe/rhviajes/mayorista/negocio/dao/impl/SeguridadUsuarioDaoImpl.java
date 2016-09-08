@@ -57,7 +57,7 @@ public class SeguridadUsuarioDaoImpl extends UtilJpa<Usuario> implements Segurid
 	 */
 	@Override
 	public void registrarUsuario(Usuario usuario) {
-		
+		registrarUsuario(usuario);
 	}
 
 	/* (non-Javadoc)
