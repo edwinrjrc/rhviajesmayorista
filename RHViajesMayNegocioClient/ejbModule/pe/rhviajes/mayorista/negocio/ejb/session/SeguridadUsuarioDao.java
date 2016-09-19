@@ -20,8 +20,10 @@ public interface SeguridadUsuarioDao {
 
 	public List<pe.rhviajes.mayorista.bean.Usuario> listarUsuario(pe.rhviajes.mayorista.bean.Usuario usuario) throws SQLException, RHViajesException;
 	
-	public void registrarUsuario(Usuario usuario);
+	public Usuario registrarUsuario(Usuario usuario) throws SQLException, RHViajesException, Exception;
 	
 	public void actualizarUsuario(Usuario usuario);
+	
+	public Usuario consultarUsuario(String login) throws SQLException, Exception;
 	
 }

@@ -23,7 +23,6 @@ appinicio.controller('InicioCtrl', function($scope){
 appinicio.controller('SeguridadCtrl', ['$scope','$http', function($scope, $http){
 	$scope.listaUsuarios = {};
 	$scope.listaRoles = {};
-	$scope.beanUsuario = {};
 	
 	$scope.listarUsuario = function(){
 		$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
@@ -31,6 +30,8 @@ appinicio.controller('SeguridadCtrl', ['$scope','$http', function($scope, $http)
 				function successCallback(response){
 					$scope.listaUsuarios = response.data.usuarios;
 					$scope.listaRoles = response.data.roles;
+					rol = {"id":-1,"nombre":"-Seleccione-"};
+					$scope.listaRoles.push(rol);
 				},
 				function errorCallback(response){
 					console.log('Response error');
@@ -38,16 +39,17 @@ appinicio.controller('SeguridadCtrl', ['$scope','$http', function($scope, $http)
 	};
 	
 	$scope.enviaForm = function(isValid){
-		console.log("Hola");
-		$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
-			params: {accion:'ingresarUsuario', formulario: $scope.beanUsuario}}).then(
-				function successCallback(response){
-					console.log('Response success ingresarUsuario');
-					
-				},
-				function errorCallback(response){
-					console.log('Response error');
-				});
+		if (true){
+			$http({method: 'GET', url: 'http://localhost:8080/RHViajesMayWeb/ServletSeguridad', 
+				params: {accion:'ingresarUsuario', formulario: $scope.beanUsuario}}).then(
+					function successCallback(response){
+						console.log('Response success ingresarUsuario');
+						
+					},
+					function errorCallback(response){
+						console.log('Response error');
+					});
+		}
 	};
 
 	$scope.nuevoUsuario = function(){
@@ -56,7 +58,9 @@ appinicio.controller('SeguridadCtrl', ['$scope','$http', function($scope, $http)
 	};
 	
 	$scope.listarUsuario();
-	
+	$scope.beanUsuario = {};
+	$scope.beanUsuario.rol = {};
+	$scope.beanUsuario.rol.id = -1;
 }]);
 
 

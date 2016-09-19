@@ -1,3 +1,6 @@
+<%@ page import="pe.rhviajes.mayorista.bean.Usuario" %>
+
+<jsp:useBean id="usuario" class="pe.rhviajes.mayorista.bean.Usuario" scope="session"></jsp:useBean>
 <script src="resources/js/jquery.min.js"></script>
 <script src="resources/js/metisMenu.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
@@ -16,7 +19,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html">RHViajes Mayorista v1.0 {{enlacemenu1}}</a>
+		<a class="navbar-brand" href="index.html">RHViajes Mayorista v1.0 - <jsp:output></jsp:output></a>
 	</div>
 	<!-- /.navbar-header -->
 

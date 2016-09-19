@@ -3,6 +3,7 @@ package pe.rhviajes.mayorista.web.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,17 +72,33 @@ public class ServletSeguridad extends HttpServlet {
 				Type type = new TypeToken<Map<String, Object>>(){}.getType();
 				Map<String, Object> mapeo = gson.fromJson(formulario, type);
 				
-				System.out.println("login ::"+mapeo.get("login"));
-				System.out.println("password ::"+mapeo.get("password"));
-				System.out.println("repassword ::"+mapeo.get("repassword"));
-				System.out.println("nombres ::"+mapeo.get("nombres"));
-				System.out.println("apellidos ::"+mapeo.get("apellidos"));
+				Usuario usuario = new Usuario();
+				usuario.setLogin(mapeo.get("login").toString());
+				usuario.setPassword(mapeo.get("password").toString());
+				usuario.setNombres(mapeo.get("nombres").toString());
+				usuario.setApellidoPaterno(mapeo.get("apellidoPaterno").toString());
+				usuario.setApellidoMaterno(mapeo.get("apellidoMaterno").toString());
+				usuario.setUsuarioCreacion("usuario");
+				usuario.setUsuarioModificacion("usuario");
+				Map<String, Object> mapeoRol = (Map)mapeo.get("rol");
+				Rol rol = new Rol();
+				rol.setId(Double.valueOf(mapeoRol.get("id").toString()).intValue());
+				//rol.setNombre(mapeoRol.get("nombre").toString());
+				usuario.getRoles().add(rol);
+				
+				seguridadRemote.registrarUsuario(usuario);
 			}
 			
 		} catch (RHViajesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

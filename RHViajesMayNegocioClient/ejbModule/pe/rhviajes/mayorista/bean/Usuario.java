@@ -1,5 +1,6 @@
 package pe.rhviajes.mayorista.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario extends Base{
@@ -65,6 +66,9 @@ public class Usuario extends Base{
 	 * @return the roles
 	 */
 	public List<Rol> getRoles() {
+		if (roles == null){
+			roles = new ArrayList<Rol>();
+		}
 		return roles;
 	}
 	/**

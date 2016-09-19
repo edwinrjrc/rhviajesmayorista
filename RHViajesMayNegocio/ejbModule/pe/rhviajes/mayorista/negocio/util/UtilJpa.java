@@ -41,7 +41,6 @@ public class UtilJpa<T> {
 	public void eliminar(T entity) {
 		T entityToBeRemoved = em.merge(entity);
 		em.remove(entityToBeRemoved);
-
 	}
 
 	public T actualizarEntity(T entity) {

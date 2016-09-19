@@ -1,11 +1,17 @@
 package pe.rhviajes.mayorista.web.servlet;
 
 import java.io.IOException;
+
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import pe.rhviajes.mayorista.negocio.ejb.session.SeguridadRemote;
+import pe.rhviajes.mayorista.negocio.excepcion.RHViajesException;
 
 /**
  * Servlet implementation class ServletRedirigir
@@ -13,30 +19,41 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ServletRedirigir")
 public class ServletRedirigir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletRedirigir() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("llamada servlet 1");
-		//getServletContext().getRequestDispatcher("/faces/index.xhtml").forward(request, response);
-		response.sendRedirect("index.xhtml");
+	@EJB(lookup = "java:jboss/exported/RHViajesMayNegocioEAR/RHViajesMayNegocio/Seguridad!pe.rhviajes.mayorista.negocio.ejb.session.SeguridadRemote")
+	private SeguridadRemote seguridadRemote;
+
+	public ServletRedirigir() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("llamada servlet 2");
-		getServletContext().getRequestDispatcher("/faces/index.xhtml").forward(request, response);
+		// response.sendRedirect("paginas/inicio.html");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String usuario = request.getParameter("usuarioLogin");
+		HttpSession session = request.getSession(true);
+		try {
+			session.setAttribute("UsuarioSession",
+					seguridadRemote.consultarUsuario(usuario));
+		} catch (RHViajesException e) {
+			e.printStackTrace();
+		}
+		getServletContext().getRequestDispatcher("/paginas/inicio.jsp")
+				.forward(request, response);
 	}
 
 }

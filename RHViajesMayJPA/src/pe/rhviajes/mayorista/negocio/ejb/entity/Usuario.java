@@ -17,7 +17,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="USUARIO_ID_GENERATOR", sequenceName="SEGURIDAD.SEQ_USUARIO")
+	@SequenceGenerator(name="USUARIO_ID_GENERATOR", sequenceName="SEGURIDAD.SEQ_USUARIO", schema="seguridad", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIO_ID_GENERATOR")
 	@Column(unique=true, nullable=false)
 	private Integer id;
@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
 	@Column(nullable=false)
 	private Integer idempresa;
 
-	@Column(nullable=false)
+	@Column(nullable=false, columnDefinition="integer default 1")
 	private Integer idestadoregistro;
 
 	@Column(nullable=false, length=50)

@@ -1,6 +1,7 @@
 package pe.rhviajes.mayorista.negocio.ejb.session;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,9 @@ public class Seguridad implements SeguridadRemote, SeguridadLocal {
 	@EJB
 	SeguridadUsuarioDao seguridadUsuarioDao;
 	@EJB
-	SeguridadRolDao seguridadRolDao; 
+	SeguridadRolDao seguridadRolDao;
+	@EJB
+	SeguridadUsuarioRolDao seguridadUsuarioRolDao;
 	
 	@Override
 	public List<Usuario> listarUsuarios() throws RHViajesException {
@@ -39,7 +42,7 @@ public class Seguridad implements SeguridadRemote, SeguridadLocal {
 	}
 
 	@Override
-	public boolean registrarUsuario(Usuario beanUsuario) throws RHViajesException {
+	public boolean registrarUsuario(Usuario beanUsuario) throws Exception {
 		pe.rhviajes.mayorista.negocio.ejb.entity.Usuario usuario = new pe.rhviajes.mayorista.negocio.ejb.entity.Usuario();
 		usuario.setNombres(beanUsuario.getNombres());
 		usuario.setApepaterno(beanUsuario.getApellidoPaterno());
@@ -47,10 +50,29 @@ public class Seguridad implements SeguridadRemote, SeguridadLocal {
 		usuario.setLogin(beanUsuario.getLogin());
 		usuario.setPassword(beanUsuario.getPassword());
 		usuario.setIdempresa(beanUsuario.getIdEmpresa());
+		usuario.setUsuregistro(beanUsuario.getUsuarioCreacion());
+		usuario.setFecregistro(new Timestamp(beanUsuario.getFechaCreacion().getTime()));
+		usuario.setIpregistro("0.0.0.0");
+		usuario.setUsumodificacion(beanUsuario.getUsuarioCreacion());
+		usuario.setFecmodificacion(new Timestamp(beanUsuario.getFechaModificacion().getTime()));
+		usuario.setIpmodificacion("0.0.0.0");
+		usuario.setIdempresa(1);
+		usuario.setIdestadoregistro(1);
 		List<Usuariorol> usuariorols = new ArrayList<Usuariorol>();
 		Usuariorol usuarioRol = null;
 		for(int i=0; i<beanUsuario.getRoles().size(); i++){
+			usuario = seguridadUsuarioDao.registrarUsuario(usuario);
 			usuarioRol = new Usuariorol();
+			usuarioRol.setUsuario(usuario);
+			usuarioRol.setIdempresa(beanUsuario.getIdEmpresa());
+			usuarioRol.setUsuregistro(beanUsuario.getUsuarioCreacion());
+			usuarioRol.setFecregistro(new Timestamp(beanUsuario.getFechaCreacion().getTime()));
+			usuarioRol.setIpregistro("0.0.0.0");
+			usuarioRol.setUsumodificacion(beanUsuario.getUsuarioCreacion());
+			usuarioRol.setFecmodificacion(new Timestamp(beanUsuario.getFechaModificacion().getTime()));
+			usuarioRol.setIpmodificacion("0.0.0.0");
+			usuarioRol.setIdempresa(1);
+			usuarioRol.setIdestadoregistro(1);
 			UsuariorolPK id = new UsuariorolPK();
 			id.setIdrol(beanUsuario.getRoles().get(i).getId());
 			id.setIdusuario(usuario.getId());
@@ -60,9 +82,34 @@ public class Seguridad implements SeguridadRemote, SeguridadLocal {
 			rol.setNombre(beanUsuario.getRoles().get(i).getNombre());
 			usuarioRol.setRol(rol);
 			usuariorols.add(usuarioRol);
+			seguridadUsuarioRolDao.registrarUsuarioRol(usuarioRol);
 		}
 		usuario.setUsuariorols(usuariorols);
-		seguridadUsuarioDao.registrarUsuario(usuario);
+		
 		return true;
+	}
+
+	@Override
+	public boolean inicioSession(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public Usuario consultarUsuario(String login) throws RHViajesException{
+		try {
+			pe.rhviajes.mayorista.negocio.ejb.entity.Usuario usuario = seguridadUsuarioDao.consultarUsuario(login);
+			
+			Usuario beanUsuario = new Usuario();
+			beanUsuario.setLogin(login);
+			beanUsuario.setNombre(usuario.getNombres());
+			beanUsuario.setNombres(usuario.getNombres());
+			beanUsuario.setApellidoPaterno(usuario.getApepaterno());
+			beanUsuario.setApellidoMaterno(usuario.getApematerno());
+			
+			return beanUsuario;
+		} catch (Exception e) {
+			throw new RHViajesException(e);
+		}
 	}
 }

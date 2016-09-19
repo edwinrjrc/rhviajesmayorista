@@ -26,18 +26,20 @@
 						</div>
 						<div class="col-lg-4">Rol</div>
 						<div class="col-lg-8">
-							<select class="form-control" ng-model="beanUsuario.rol.id" required>
-								<option>-Seleccione-</option>
-								<option ng-repeat="rol in listaRoles" ng-value="rol.id">{{rol.nombre}}</option>
+							<select class="form-control" ng-model="beanUsuario.rol.id" required ng-options="rol.id as rol.nombre for rol in listaRoles">
 							</select>
 						</div>
 						<div class="col-lg-4">Nombres</div>
 						<div class="col-lg-8">
 							<input class="form-control" type="text" ng-model="beanUsuario.nombres" required>
 						</div>
-						<div class="col-lg-4">Apellidos</div>
+						<div class="col-lg-4">Apellido Paterno</div>
 						<div class="col-lg-8">
-							<input class="form-control" type="text" ng-model="beanUsuario.apellidos" required>
+							<input class="form-control" type="text" ng-model="beanUsuario.apellidoPaterno" required>
+						</div>
+						<div class="col-lg-4">Apellido Materno</div>
+						<div class="col-lg-8">
+							<input class="form-control" type="text" ng-model="beanUsuario.apellidoMaterno" required>
 						</div>
 						<div class="col-lg-12">
 							<button type="submit" class="btn btn-primary" title="Buscar"

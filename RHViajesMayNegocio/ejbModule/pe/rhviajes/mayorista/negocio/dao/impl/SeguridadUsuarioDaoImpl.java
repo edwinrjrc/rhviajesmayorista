@@ -56,8 +56,8 @@ public class SeguridadUsuarioDaoImpl extends UtilJpa<Usuario> implements Segurid
 	 * @see pe.rhviajes.mayorista.negocio.dao.SeguridadDao#registrarUsuario(pe.rhviajes.mayorista.bean.Usuario)
 	 */
 	@Override
-	public void registrarUsuario(Usuario usuario) {
-		registrarUsuario(usuario);
+	public Usuario registrarUsuario(Usuario usuario) throws Exception{
+		return guardarEntity(usuario);
 	}
 
 	/* (non-Javadoc)
@@ -67,6 +67,13 @@ public class SeguridadUsuarioDaoImpl extends UtilJpa<Usuario> implements Segurid
 	public void actualizarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Usuario consultarUsuario(String login) throws SQLException,
+			Exception {
+		String consulta = "select u from Usuario u where u.login=:p_login";
+		return buscarRegistro(consulta, "p_login", login);
 	}
 
 }
